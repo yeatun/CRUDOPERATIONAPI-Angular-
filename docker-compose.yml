@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: ./contactsApi
+      dockerfile: /ContactList.Api/Dockerfile
+    image: contactlist/api
+    ports:
+      - "5000:80"
+  web:
+    build:
+      context: ./
+      dockerfile: /ContactList.Web2/Dockerfile
+    image: contactlist/web
+    ports:
+      - "5001:80"
+    
