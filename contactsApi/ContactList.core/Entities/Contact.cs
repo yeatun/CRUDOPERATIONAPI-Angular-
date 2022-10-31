@@ -11,14 +11,14 @@ namespace ContactList.Core.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
-        [MinLength(2)]
+       //[Required]
+        //[MinLength(2)]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public string PhoneNumber { get; set; }
         public string Company { get; set; }
     }

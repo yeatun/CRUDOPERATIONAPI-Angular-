@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    emailId: '',
-    companyName: ''
+    email: '',
+    company: ''
   }
 
   constructor(private contactService: ContactsService){
@@ -36,6 +36,57 @@ export class AppComponent implements OnInit {
     );
   }
   onSubmit () {
-    console.log(this.contact);
+
+    if(this.contact.id === ''){
+      this.contactService.addContact(this.contact)
+      .subscribe(
+        response => {
+          this.getAllContacts();
+          this.contact ={
+            id: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            email: '',
+            company: ''
+          }
+        }
+      );
+    }
+    else {
+      this.updateContact(this.contact);
+    }
+
+
+  }
+
+  onDelete(id: string){
+    this.contactService.deleteContact(id)
+    .subscribe(
+      response => {
+        this.getAllContacts();
+      }
+    );
+  }
+
+  populateForm(contact: Contact) {
+    this.contact = contact;
+  }
+
+  updateContact(contact: Contact){
+    this.contactService.updateContact(contact)
+    .subscribe(
+      response => {
+        this.getAllContacts();
+        this.contact ={
+          id: '',
+          firstName: '',
+          lastName: '',
+          phoneNumber: '',
+          email: '',
+          company: ''
+        }
+      }
+    );
   }
 }

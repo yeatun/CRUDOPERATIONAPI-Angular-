@@ -14,15 +14,15 @@
           </div>
           <div class="form-group">
             <label for="">Contact Number</label>
-            <input type="number" name="contactNumber" [(ngModel)]="contact.phoneNumber">
+            <input type="text" name="contactNumber" [(ngModel)]="contact.phoneNumber">
           </div>
           <div class="form-group">
             <label for="">Email</label>
-            <input type="email" name="emailId" [(ngModel)]="contact.emailId">
+            <input type="text" name="emailId" [(ngModel)]="contact.email">
           </div>
           <div class="form-group">
             <label for="">Company Name</label>
-            <input type="text" name="companyName" [(ngModel)]="contact.companyName">
+            <input type="text" name="companyName" [(ngModel)]="contact.company">
           </div>
           <div class="form-group">
             <button> Save</button>
@@ -33,13 +33,13 @@
       <div class="contacts-grid">
 
 
-        <div class="contact-row" *ngFor="let contact of contacts">
-          <div class="contact-row-details">
+        <div  class="contact-row" *ngFor="let contact of contacts">
+          <div (click)="populateForm(contact)" class="contact-row-details">
             <span>{{ contact.firstName }}</span>
             <span>{{ contact.phoneNumber }}</span>
           </div>
           <div class="contact-row-action">
-            <a ><i class="fa-regular fa-trash-can"></i></a>
+            <a (click)="onDelete(contact.id)" ><i class="fa-regular fa-trash-can"></i></a>
           </div>
         </div>
       </div>
