@@ -53,7 +53,7 @@ namespace ContactList.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddContact([FromBody] Contact contact)
         {
-            contact.Id = Guid.NewGuid();
+           // contact.Id = Guid.NewGuid();
             await _context.AddAsync(contact);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetContact), new { id= contact.Id }, contact);
