@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactList.Core.Interfaces
+namespace ContactList.Application.Contracts
 {
-    public interface IUnitOfWork : IDisposable
+    public interface ICurrentUserService
     {
-        Task<int> Commit();
+        Guid? UserId { get; }
     }
 }

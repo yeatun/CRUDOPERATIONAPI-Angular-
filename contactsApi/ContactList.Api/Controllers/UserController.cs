@@ -1,6 +1,6 @@
 ﻿using ContactList.Api.helper;
 using ContactList.Core.Entities;
-using ContactList.Infrastructure.Data;
+using ContactList.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;

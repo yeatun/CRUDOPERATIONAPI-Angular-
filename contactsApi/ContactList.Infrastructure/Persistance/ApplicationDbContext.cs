@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactList.Infrastructure.Data
+namespace ContactList.Infrastructure.Persistance
 {
     public class ApplicationDbContext : DbContext
     {
@@ -16,5 +17,12 @@ namespace ContactList.Infrastructure.Data
         public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
+        }
     }
 }

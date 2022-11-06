@@ -1,10 +1,8 @@
-﻿using ContactList.Infrastructure.Data;
-using ContactList.Core.Entities;
-using ContactList.Core.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using MediatR;
+using ContactList.Application.Queries.Contacts;
+using ContactList.Application.Shared.Commands.Contacts;
 
 
 
@@ -17,80 +15,117 @@ namespace ContactList.Api.Controllers
     [EnableCors()]
     public class ContactsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public ContactsController(ApplicationDbContext context) 
+        public ContactsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
-        // GET: api/<ContactsController>
-        [EnableCors()]
+        //private readonly ApplicationDbContext _context;
+
+        //public ContactsController(ApplicationDbContext context) 
+        //{
+        //    _context = context;
+        //}
+        // GET: api/<ContactsController>]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Contact>>> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] GetAllContactQuery query)
         {
-            if (_context.Contacts == null)
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetContact(Guid id)
+        {
+            return Ok(await _mediator.Send(new GetContactByIdQuery(id)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateContact([FromBody] CreateContactCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateContact(Guid id, [FromBody] UpdateContactCommand command)
+        {
+
+            if (command.Id == id)
             {
-                return NotFound();
+                var response = await _mediator.Send(command);
+                return Ok(response);
             }
-            var contacts = await _context.Contacts.ToListAsync() ;
-            return Ok(contacts);
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteContact(Guid id)
+        {
+
+            string response = string.Empty;
+            response = await _mediator.Send(new DeleteContactCommand(id));
+            return Ok(response);
         }
 
         // GET api/<ContactsController>/5
-        [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<ActionResult<IEnumerable<Contact>>> GetContact([FromRoute] Guid id)
-        {
-            var contacts = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
-            if (contacts != null) 
-            {
-                return Ok(contacts);
-            }
-            return NotFound("Contact not found");
-        }
+        //        [HttpGet]
+        //        [Route("{id:guid}")]
+        //        public async Task<ActionResult<IEnumerable<Contact>>> GetContact([FromRoute] Guid id)
+        //        {
+        //            var contacts = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
+        //            if (contacts != null) 
+        //            {
+        //                return Ok(contacts);
+        //            }
+        //            return NotFound("Contact not found");
+        //        }
 
-        // POST api/<ContactsController>
-        [HttpPost]
-        public async Task<IActionResult> AddContact([FromBody] Contact contact)
-        {
-           // contact.Id = Guid.NewGuid();
-            await _context.AddAsync(contact);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetContact), new { id= contact.Id }, contact);
-        }
+        //        // POST api/<ContactsController>
+        //        [HttpPost]
+        //        public async Task<IActionResult> AddContact([FromBody] Contact contact)
+        //        {
+        //           // contact.Id = Guid.NewGuid();
+        //            await _context.AddAsync(contact);
+        //            await _context.SaveChangesAsync();
+        //            return CreatedAtAction(nameof(GetContact), new { id= contact.Id }, contact);
+        //        }
 
-        // PUT api/<ContactsController>/5
-        [HttpPut]
-        [Route("{id:guid}")]
-        public async Task<ActionResult<IEnumerable<Contact>>> UpdateContact([FromRoute] Guid id, [FromBody] Contact contact)
-        {
-            var existingcontact = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
-            if(existingcontact != null)
-            {
-                existingcontact.FirstName = contact.FirstName;
-                existingcontact.LastName = contact.LastName;
-                existingcontact.Email = contact.Email;
-                existingcontact.PhoneNumber = contact.PhoneNumber;
-                existingcontact.Company = contact.Company;
-                await _context.SaveChangesAsync();
-                return Ok(existingcontact);
-            }
-            return NotFound("Contact not found");
-        }
+        //        // PUT api/<ContactsController>/5
+        //        [HttpPut]
+        //        [Route("{id:guid}")]
+        //        public async Task<ActionResult<IEnumerable<Contact>>> UpdateContact([FromRoute] Guid id, [FromBody] Contact contact)
+        //        {
+        //            var existingcontact = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
+        //            if(existingcontact != null)
+        //            {
+        //                existingcontact.FirstName = contact.FirstName;
+        //                existingcontact.LastName = contact.LastName;
+        //                existingcontact.Email = contact.Email;
+        //                existingcontact.PhoneNumber = contact.PhoneNumber;
+        //                existingcontact.Company = contact.Company;
+        //                await _context.SaveChangesAsync();
+        //                return Ok(existingcontact);
+        //            }
+        //            return NotFound("Contact not found");
+        //        }
 
-        // DELETE api/<ContactsController>/5
-        [HttpDelete]
-        [Route("{id:guid}")]
-        public async Task<ActionResult<IEnumerable<Contact>>> DeleteContact([FromRoute] Guid id)
-        {
-            var existingcontact = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
-            if (existingcontact != null)
-            {
-                _context.Remove(existingcontact);
-                await _context.SaveChangesAsync();
-                return Ok(existingcontact);
-            }
-            return NotFound("Contact not found");
-        }
+        //        // DELETE api/<ContactsController>/5
+        //        [HttpDelete]
+        //        [Route("{id:guid}")]
+        //        public async Task<ActionResult<IEnumerable<Contact>>> DeleteContact([FromRoute] Guid id)
+        //        {
+        //            var existingcontact = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
+        //            if (existingcontact != null)
+        //            {
+        //                _context.Remove(existingcontact);
+        //                await _context.SaveChangesAsync();
+        //                return Ok(existingcontact);
+        //            }
+        //            return NotFound("Contact not found");
+        //        }
     }
 }
