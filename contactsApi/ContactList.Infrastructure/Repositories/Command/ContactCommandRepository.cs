@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ContactList.Infrastructure.Repositories.Command
 {
-    public class ContactCommandRepository : CommandRepository<Contact>, IContactCommandRepository
+    public class ContactCommandRepository : CommandRepository<SuperVillain>, IContactCommandRepository
     {
         public ContactCommandRepository(DbFactory dbFactory) : base(dbFactory)
         {

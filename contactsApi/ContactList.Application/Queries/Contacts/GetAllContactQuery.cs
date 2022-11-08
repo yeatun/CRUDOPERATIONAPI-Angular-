@@ -29,11 +29,11 @@ namespace ContactList.Application.Queries.Contacts
                 _pageSize = (value > PaginationConstants.MAX_PAGE_SIZE) ? PaginationConstants.MAX_PAGE_SIZE : value;
             }
         }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? Company { get; set; }
+    
+        public string? VillainName { get; set; }
+        public string? Franchise { get; set; }
+        public string? Powers { get; set; }
+        public string? ImageURL { get; set; }
     }
 
     public class GetAllContactQueryHandler : IRequestHandler<GetAllContactQuery, PaginatedListResponseDTO<ContactResponseDTO>>

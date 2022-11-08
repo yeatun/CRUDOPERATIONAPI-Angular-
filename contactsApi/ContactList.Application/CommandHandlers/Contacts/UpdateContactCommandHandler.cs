@@ -37,7 +37,7 @@ namespace ContactList.Application.CommandHandlers.Contacts
             if(contactEntity == null)
                 throw new NotFoundException("contact not found");
 
-            var mappedContactEntity = _mapper.Map<UpdateContactCommand, Contact>(request, contactEntity);
+            var mappedContactEntity = _mapper.Map<UpdateContactCommand, SuperVillain>(request, contactEntity);
 
             var updatedContactEntity = await _contactCommandRepository.UpdateAsync(mappedContactEntity);
 

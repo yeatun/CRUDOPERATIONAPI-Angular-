@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace ContactList.Infrastructure.Migrations
+namespace CrudOp.Infrastructure.Migrations
 {
-    public partial class newkey : Migration
+    public partial class db1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

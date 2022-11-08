@@ -16,40 +16,40 @@ using ConfigurationSettings = ContactList.Infrastructure.Configs.ConfigurationSe
 
 namespace ContactList.Infrastructure.Repositories.Query
 {
-    public class ContactQueryRepository : MultipleResultQueryRepository<Contact>, IContactQueryRepository
+    public class ContactQueryRepository : MultipleResultQueryRepository<SuperVillain>, IContactQueryRepository
     {
         public ContactQueryRepository(IConfiguration configuration, IOptions<ConfigurationSettings> settings) : base(configuration, settings)
         {
         }
 
-        public async Task<(long, IEnumerable<Contact>)> GetAllContactAsync(GetAllContactQuery queryParams)
+        public async Task<(long, IEnumerable<SuperVillain>)> GetAllContactAsync(GetAllContactQuery queryParams)
         {
             int pageSize = queryParams.PageSize;
             int offset = (queryParams.PageNumber - 1) * pageSize;    //offset = (pageNumber -1) * pageSize
-            string contactName = queryParams.FirstName;
-            string contactNumber = queryParams.PhoneNumber;
+            string villainName = queryParams.VillainName;
+            string franchise = queryParams.Franchise;
             
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@offset", offset);
             parameters.Add("@pageSize", pageSize);
-            parameters.Add("@FirstName", contactName);
-            parameters.Add("@PhoneNumber", contactNumber);
+            parameters.Add("@VillainName", villainName);
+            parameters.Add("@Franchise", franchise);
 
-            string query = "SELECT bu.Id , bu.FirstName , " +
-                " bu.PhoneNumber , bu.Email , bu.LastName , bu.Company " +
-                " FROM Contacts as bu";
+            string query = "SELECT bu.Id , bu.VillainName , " +
+                " bu.Franchise , bu.Powers , bu.ImageURL  " +
+                " FROM SuperVillain as bu";
 
             //include filter parameter 
             string filter = "";
-            if (!string.IsNullOrWhiteSpace(contactName))
+            if (!string.IsNullOrWhiteSpace(villainName))
             {
-                filter += " AND FirstName = @contactName ";
+                filter += " AND VillainName = @VillainName ";
             }
 
-            if (contactNumber!= null)
+            if (franchise != null)
             {
-                filter += " AND PhoneNumber = @PhoneNumber ";
+                filter += " AND Franchise = @Franchise ";
             }
 
             //filter query condition is implemented if filter string length is greater than 0
@@ -62,20 +62,20 @@ namespace ContactList.Infrastructure.Repositories.Query
             }
 
             //query for getting count
-            query += "; SELECT COUNT(*) AS count FROM Contacts " + filter + ";";
+            query += "; SELECT COUNT(*) AS count FROM SuperVillain " + filter + ";";
 
 
             return await base.GetMultipleResultAsync(query, parameters, false);
         }
 
-        public async Task<Contact> GetContactById(Guid id)
+        public async Task<SuperVillain> GetContactById(int id)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            string query = "SELECT bu.Id , bu.FirstName , " +
-                " bu.PhoneNumber , bu.Email , bu.LastName , bu.Company" +
-                " FROM Contacts as bu WHERE Id = @Id";
+            string query = "SELECT bu.Id , bu.VillainName , " +
+                " bu.Franchise , bu.Powers , bu.ImageURL" +
+                " FROM SuperVillain as bu WHERE Id = @Id";
             return await base.SingleAsync(query, parameters, false);
 
         }

@@ -1,6 +1,6 @@
 using ContactList.Core.Interfaces;
 using ContactList.Application;
-using ContactList.Infrastructure;
+/*using ContactList.Infrastructure;*/
 using ContactList.Infrastructure.Persistance;
 using ContactList.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -12,6 +12,7 @@ using ContactList.Application.Contracts;
 using ContactList.Api.Services;
 using System.Reflection;
 using MediatR;
+using ContactList.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("https://localhost:7139", "http://localhost:8000", "http://localhost:5000", "https://localhost:")
+            builder.WithOrigins("https://localhost:7198", "http://localhost:8000", "http://localhost:5000", "https://localhost:")
                                 .AllowAnyHeader()
                                 .AllowAnyOrigin()
                                 .AllowAnyMethod();

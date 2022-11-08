@@ -15,12 +15,12 @@ namespace ContactList.Application.Common.Mappings
         public ContactMappingProfile()
         {
             //DTO to Domain
-            CreateMap<Contact, ContactResponseDTO>().ReverseMap();
+            CreateMap<SuperVillain, ContactResponseDTO>().ReverseMap();
 
             //Command to Domain
-            CreateMap<Contact, CreateContactCommand>().ReverseMap();
+            CreateMap<SuperVillain, CreateContactCommand>().ReverseMap();
 
-            CreateMap<Contact, UpdateContactCommand>().ReverseMap();
+            CreateMap<SuperVillain, UpdateContactCommand>().ReverseMap();
 
         }
     }

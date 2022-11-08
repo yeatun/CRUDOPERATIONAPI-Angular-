@@ -35,7 +35,7 @@ namespace ContactList.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetContact(Guid id)
+        public async Task<IActionResult> GetContact(int id)
         {
             return Ok(await _mediator.Send(new GetContactByIdQuery(id)));
         }
@@ -48,7 +48,7 @@ namespace ContactList.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContact(Guid id, [FromBody] UpdateContactCommand command)
+        public async Task<IActionResult> UpdateContact(int id, [FromBody] UpdateContactCommand command)
         {
 
             if (command.Id == id)
@@ -63,7 +63,7 @@ namespace ContactList.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContact(Guid id)
+        public async Task<IActionResult> DeleteContact(int id)
         {
 
             string response = string.Empty;

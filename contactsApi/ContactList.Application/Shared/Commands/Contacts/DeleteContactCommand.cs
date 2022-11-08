@@ -9,8 +9,8 @@ namespace ContactList.Application.Shared.Commands.Contacts
 {
     public class DeleteContactCommand : IRequest<string>
     {
-        public Guid Id { get; set; }
-        public DeleteContactCommand(Guid contactId)
+        public int Id { get; set; }
+        public DeleteContactCommand(int contactId)
         {
             Id = contactId;
         }

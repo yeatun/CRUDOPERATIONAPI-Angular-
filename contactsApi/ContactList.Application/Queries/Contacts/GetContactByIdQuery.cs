@@ -13,8 +13,8 @@ namespace ContactList.Application.Queries.Contacts
 {
     public class GetContactByIdQuery : IRequest<ContactResponseDTO>
     {
-        public Guid Id { get; set; }
-        public GetContactByIdQuery(Guid contactId)
+        public int Id { get; set; }
+        public GetContactByIdQuery(int contactId)
         {
             Id = contactId;
         }

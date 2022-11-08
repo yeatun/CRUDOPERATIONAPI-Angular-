@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.Contracts.Repositories.Query
 {
-    public interface IContactQueryRepository : IMultipleResultQueryRepository<Contact>
+    public interface IContactQueryRepository : IMultipleResultQueryRepository<SuperVillain>
     {
-        public Task<(long, IEnumerable<Contact>)> GetAllContactAsync(GetAllContactQuery queryParams);
-        public Task<Contact> GetContactById(Guid id);
+        public Task<(long, IEnumerable<SuperVillain>)> GetAllContactAsync(GetAllContactQuery queryParams);
+        public Task<SuperVillain> GetContactById(int id);
     }
 }

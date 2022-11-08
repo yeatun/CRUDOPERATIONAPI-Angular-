@@ -6,11 +6,10 @@ namespace ContactList.Application.Shared.Commands.Contacts
 {
     public class UpdateContactCommand : IRequest<ContactResponseDTO>
     {
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Company { get; set; }
+        public int Id { get; set; }
+        public string? VillainName { get; set; }
+        public string? Franchise { get; set; }
+        public string? Powers { get; set; }
+        public string? ImageURL { get; set; }
     }
 }

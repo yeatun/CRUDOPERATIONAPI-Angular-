@@ -25,7 +25,7 @@ namespace ContactList.Application.CommandHandlers.Contacts
 
         public async Task<ContactResponseDTO> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
-            var contactEntity = _mapper.Map<Contact>(request);
+            var contactEntity = _mapper.Map<SuperVillain>(request);
             var newContactEntity = await _contactCommandRepository.InsertAsync(contactEntity);
             await _unitOfWork.CommitAsync(cancellationToken);
 
