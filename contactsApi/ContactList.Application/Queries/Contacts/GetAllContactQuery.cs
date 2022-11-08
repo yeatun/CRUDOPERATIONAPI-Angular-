@@ -38,9 +38,9 @@ namespace ContactList.Application.Queries.Contacts
 
     public class GetAllContactQueryHandler : IRequestHandler<GetAllContactQuery, PaginatedListResponseDTO<ContactResponseDTO>>
     {
-        private readonly IContactQueryRepository _contactQueryRepository;
+        private readonly ISuperVillainQueryRepository _contactQueryRepository;
         private readonly IMapper _mapper;
-        public GetAllContactQueryHandler(IContactQueryRepository ContactQueryRepository, IMapper mapper)
+        public GetAllContactQueryHandler(ISuperVillainQueryRepository ContactQueryRepository, IMapper mapper)
         {
             _contactQueryRepository = ContactQueryRepository;
             _mapper = mapper;

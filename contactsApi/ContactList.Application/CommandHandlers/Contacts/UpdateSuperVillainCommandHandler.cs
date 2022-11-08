@@ -15,14 +15,14 @@ using ContactList.Application.Common.Exceptions;
 
 namespace ContactList.Application.CommandHandlers.Contacts
 {
-    public class UpdateContactCommandHandler : IRequestHandler<UpdateContactCommand, ContactResponseDTO>
+    public class UpdateSuperVillainCommandHandler : IRequestHandler<UpdateContactCommand, ContactResponseDTO>
     {
-        private readonly IContactCommandRepository _contactCommandRepository;
-        private readonly IContactQueryRepository _contactQueryRepository;
+        private readonly ISuperVillainCommandRepository _contactCommandRepository;
+        private readonly ISuperVillainQueryRepository _contactQueryRepository;
         private readonly IUnitofWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateContactCommandHandler(IContactCommandRepository contactCommandRepository, IContactQueryRepository contactQueryRepository, IUnitofWork unitOfWork, IMapper mapper)
+        public UpdateSuperVillainCommandHandler(ISuperVillainCommandRepository contactCommandRepository, ISuperVillainQueryRepository contactQueryRepository, IUnitofWork unitOfWork, IMapper mapper)
         {
             _contactCommandRepository = contactCommandRepository;
             _contactQueryRepository = contactQueryRepository;

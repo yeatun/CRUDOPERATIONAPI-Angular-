@@ -16,9 +16,9 @@ using ConfigurationSettings = ContactList.Infrastructure.Configs.ConfigurationSe
 
 namespace ContactList.Infrastructure.Repositories.Query
 {
-    public class ContactQueryRepository : MultipleResultQueryRepository<SuperVillain>, IContactQueryRepository
+    public class SuperVillainQueryRepository : MultipleResultQueryRepository<SuperVillain>, ISuperVillainQueryRepository
     {
-        public ContactQueryRepository(IConfiguration configuration, IOptions<ConfigurationSettings> settings) : base(configuration, settings)
+        public SuperVillainQueryRepository(IConfiguration configuration, IOptions<ConfigurationSettings> settings) : base(configuration, settings)
         {
         }
 

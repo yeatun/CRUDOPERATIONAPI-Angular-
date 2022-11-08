@@ -22,10 +22,10 @@ namespace ContactList.Application.Queries.Contacts
 
     public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactResponseDTO>
     {
-        private readonly IContactQueryRepository _contactQueryRepository;
+        private readonly ISuperVillainQueryRepository _contactQueryRepository;
         private readonly IMapper _mapper;
 
-        public GetContactByIdQueryHandler(IContactQueryRepository ContactQueryRepository, IMapper mapper)
+        public GetContactByIdQueryHandler(ISuperVillainQueryRepository ContactQueryRepository, IMapper mapper)
         {
             _contactQueryRepository = ContactQueryRepository;
             _mapper = mapper;

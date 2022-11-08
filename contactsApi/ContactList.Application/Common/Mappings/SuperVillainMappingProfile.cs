@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.Common.Mappings
 {
-    public class ContactMappingProfile : Profile
+    public class SuperVillainMappingProfile : Profile
     {
-        public ContactMappingProfile()
+        public SuperVillainMappingProfile()
         {
             //DTO to Domain
             CreateMap<SuperVillain, ContactResponseDTO>().ReverseMap();

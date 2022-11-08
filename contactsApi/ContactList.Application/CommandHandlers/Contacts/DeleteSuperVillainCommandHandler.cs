@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.CommandHandlers.Contacts
 {
-    public class DeleteContactCommandHandler : IRequestHandler<DeleteContactCommand, string>
+    public class DeleteSuperVillainCommandHandler : IRequestHandler<DeleteContactCommand, string>
     {
-        private readonly IContactCommandRepository _contactCommandRepository;
-        private readonly IContactQueryRepository _contactQueryRepository;
+        private readonly ISuperVillainCommandRepository _contactCommandRepository;
+        private readonly ISuperVillainQueryRepository _contactQueryRepository;
         private readonly IUnitofWork _unitOfWork;
 
-        public DeleteContactCommandHandler(IContactCommandRepository contactCommandRepository, IUnitofWork unitOfWork, IContactQueryRepository contactQueryRepository)
+        public DeleteSuperVillainCommandHandler(ISuperVillainCommandRepository contactCommandRepository, IUnitofWork unitOfWork, ISuperVillainQueryRepository contactQueryRepository)
         {
             _contactCommandRepository = contactCommandRepository;
             _contactQueryRepository = contactQueryRepository;

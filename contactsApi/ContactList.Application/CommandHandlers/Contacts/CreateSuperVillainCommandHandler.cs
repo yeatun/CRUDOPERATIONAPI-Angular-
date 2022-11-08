@@ -9,13 +9,13 @@ using MediatR;
 
 namespace ContactList.Application.CommandHandlers.Contacts
 {
-    public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, ContactResponseDTO>
+    public class CreateSuperVillainCommandHandler : IRequestHandler<CreateContactCommand, ContactResponseDTO>
     {
-        private readonly IContactCommandRepository _contactCommandRepository;
+        private readonly ISuperVillainCommandRepository _contactCommandRepository;
         private readonly IUnitofWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateContactCommandHandler(IContactCommandRepository contactCommandRepository, IUnitofWork unitOfWork, IMapper mapper)
+        public CreateSuperVillainCommandHandler(ISuperVillainCommandRepository contactCommandRepository, IUnitofWork unitOfWork, IMapper mapper)
         {
             _contactCommandRepository = contactCommandRepository;
             _unitOfWork = unitOfWork;

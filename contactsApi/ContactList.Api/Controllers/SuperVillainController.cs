@@ -13,11 +13,11 @@ namespace ContactList.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors()]
-    public class ContactsController : ControllerBase
+    public class SuperVillainController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ContactsController(IMediator mediator)
+        public SuperVillainController(IMediator mediator)
         {
             _mediator = mediator;
         }

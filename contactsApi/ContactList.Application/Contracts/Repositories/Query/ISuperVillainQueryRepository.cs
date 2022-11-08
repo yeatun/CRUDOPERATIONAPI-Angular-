@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.Contracts.Repositories.Query
 {
-    public interface IContactQueryRepository : IMultipleResultQueryRepository<SuperVillain>
+    public interface ISuperVillainQueryRepository : IMultipleResultQueryRepository<SuperVillain>
     {
         public Task<(long, IEnumerable<SuperVillain>)> GetAllContactAsync(GetAllContactQuery queryParams);
         public Task<SuperVillain> GetContactById(int id);

@@ -3,7 +3,7 @@ using ContactList.Core.Entities;
 
 namespace ContactList.Application.Contracts.Repositories.Command
 {
-    public interface IContactCommandRepository : ICommandRepository<SuperVillain>
+    public interface ISuperVillainCommandRepository : ICommandRepository<SuperVillain>
     {
     }
 }

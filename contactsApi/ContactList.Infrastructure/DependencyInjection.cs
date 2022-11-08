@@ -56,8 +56,8 @@ namespace ContactList.Infrastructure
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IContactCommandRepository, ContactCommandRepository>()
-                .AddScoped<IContactQueryRepository, ContactQueryRepository>();
+            services.AddScoped<ISuperVillainCommandRepository, SuperVillainCommandRepository>()
+                .AddScoped<ISuperVillainQueryRepository, SuperVillainQueryRepository>();
 
             return services;
         }

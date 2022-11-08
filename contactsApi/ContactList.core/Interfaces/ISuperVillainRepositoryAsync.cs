@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContactList.Core.Interfaces
 {
-    public interface IContactRepositoryAsync : IGenericRepositoryAsync<SuperVillain>
+    public interface ISuperVillainRepositoryAsync : IGenericRepositoryAsync<SuperVillain>
     {
     }
 }
