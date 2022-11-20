@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContactList.core\CrudOp.Core.csproj" />
+    <ProjectReference Include="..\ContactList.core\ContactList.Core.csproj" />
   </ItemGroup>
 
 </Project>

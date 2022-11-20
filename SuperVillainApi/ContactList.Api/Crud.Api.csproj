@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContactList.Infrastructure\CrudOp.Infrastructure.csproj" />
+    <ProjectReference Include="..\ContactList.Infrastructure\ContactList.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,14 +9,15 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ContactList.Api/ContactList.Api.csproj", "ContactList.Api/"]
 COPY ["ContactList.Infrastructure/ContactList.Infrastructure.csproj", "ContactList.Infrastructure/"]
+COPY ["ContactList.Application/ContactList.Application.csproj", "ContactList.Application/"]
 COPY ["ContactList.core/ContactList.Core.csproj", "ContactList.core/"]
 RUN dotnet restore "ContactList.Api/ContactList.Api.csproj"
 COPY . .
-WORKDIR "/src"
-RUN dotnet build "ContactList.Api/ContactList.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/ContactList.Api"
+RUN dotnet build "ContactList.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ContactList.Api/ContactList.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ContactList.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

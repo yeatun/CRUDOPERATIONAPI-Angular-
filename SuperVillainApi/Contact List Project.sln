@@ -3,18 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudOp.Core", "ContactList.core\CrudOp.Core.csproj", "{567F7434-F1FE-48B1-BF04-66849D723E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Core", "ContactList.core\ContactList.Core.csproj", "{567F7434-F1FE-48B1-BF04-66849D723E5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudOp.Infrastructure", "ContactList.Infrastructure\CrudOp.Infrastructure.csproj", "{3F875FF0-7DBB-4C1C-A157-C40389F1CD9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Infrastructure", "ContactList.Infrastructure\ContactList.Infrastructure.csproj", "{3F875FF0-7DBB-4C1C-A157-C40389F1CD9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudOp.Api", "ContactList.Api\CrudOp.Api.csproj", "{08D534AD-D860-4F6F-BE2C-4AE3CBEA2D13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Api", "ContactList.Api\ContactList.Api.csproj", "{08D534AD-D860-4F6F-BE2C-4AE3CBEA2D13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{146866A9-0A4B-474F-8B7E-6994797EED66}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudOp.Application", "ContactList.Application\CrudOp.Application.csproj", "{0C168422-9CBF-4261-9D6A-6AE2DBAE16DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Application", "ContactList.Application\ContactList.Application.csproj", "{0C168422-9CBF-4261-9D6A-6AE2DBAE16DC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{567F7434-F1FE-48B1-BF04-66849D723E5B} = {567F7434-F1FE-48B1-BF04-66849D723E5B}
 	EndProjectSection
