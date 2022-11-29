@@ -1,4 +1,4 @@
-﻿using ContactList.Api.helper;
+﻿
 using ContactList.Core.Entities;
 using ContactList.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +19,7 @@ namespace ContactList.Api.Controllers
             _authcontext = context;
         }
 
-        [HttpPost("authenticate")]
+       /* [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] User userObj)
         {
             if(userObj == null)
@@ -42,9 +42,9 @@ namespace ContactList.Api.Controllers
             }
             return NotFound(new { Message = "Wrong Password" });
 
-        }
+        }*/
 
-        [HttpPost("register")]
+      /*  [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] User userObj)
         {
             if (userObj == null)
@@ -58,7 +58,7 @@ namespace ContactList.Api.Controllers
             {
                 Message = "Registration Successful"
             });
-        }
+        }*/
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAsync()
