@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test
+  name: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test
+    spec:
+      containers:
+      - image: docker.io/01521433811/backend-project-api
+        name: backendcqrs
+        ports:
+        - containerPort: 80
+        resources: {}      
+      nodeSelector:
+        env: dev
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimeStamp: null
+  labels:
+    app: test
+  name: test
+spec:
+  type: LoadBalancer
+  selector:
+    app: test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30502
+status:
+  loadBalancer: {}
