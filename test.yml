@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: test
-        image: docker.io/01521433811/sv-angular:3.0
+        image: docker.io/01521433811/backendcqrs
         resources:
           limits:
             memory: "128Mi"
