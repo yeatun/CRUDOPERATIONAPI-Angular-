@@ -42,6 +42,6 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 44339
+    nodePort: 30503
 status:
   loadBalancer: {}
