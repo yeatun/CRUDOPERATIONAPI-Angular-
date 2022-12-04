@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContactList.Application.Common.Exceptions
+﻿namespace ContactList.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {
-        public NotFoundException()
-            : base("Requested data not found")
+        public NotFoundException() : base()
         {
+
         }
 
-        public NotFoundException(string message)
-            : base(message)
+        public NotFoundException(string message) : base(message)
         {
+
         }
 
-        public NotFoundException(string message, Exception innerException)
-            : base(message, innerException)
+        public NotFoundException(string message, Exception exp) : base(message, exp)
         {
+
         }
 
         public NotFoundException(string name, object key)
             : base($"Entity \"{name}\" ({key}) was not found.")
         {
+
         }
     }
 }

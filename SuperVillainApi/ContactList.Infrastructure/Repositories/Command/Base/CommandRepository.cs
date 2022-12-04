@@ -1,5 +1,6 @@
-﻿using ContactList.Application.Contracts.Repositories.Command.Base;
-using ContactList.Infrastructure.Persistance;
+﻿
+using ContactList.Core.Repositories.Command.Base;
+using ContactList.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,92 +10,31 @@ using System.Threading.Tasks;
 
 namespace ContactList.Infrastructure.Repositories.Command.Base
 {
-    public class CommandRepository<TEntity> : IDisposable, ICommandRepository<TEntity> where TEntity : class
+    public class CommandRepository<T> : ICommandRepository<T> where T : class
     {
+        protected readonly SuperVillainDbContext _context;
 
-        private readonly DbFactory _dbFactory;
-        private DbSet<TEntity> _dbSet;
-
-        public CommandRepository(DbFactory dbFactory)
+        public CommandRepository(SuperVillainDbContext context)
         {
-            _dbFactory = dbFactory;
+            _context = context;
         }
-
-        protected DbSet<TEntity> DbSet
+        public async Task<T> AddAsync(T entity)
         {
-            get => _dbSet ??= _dbFactory.DbContext.Set<TEntity>();
-        }
-
-        public async Task DeleteAsync(TEntity entity)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            DbSet.Remove(entity);
-            await Task.CompletedTask;
-        }
-
-        public async Task DeleteAsync(IEnumerable<TEntity> entity)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            DbSet.RemoveRange(entity);
-            await Task.CompletedTask;
-        }
-
-        public async Task<TEntity> InsertAsync(TEntity entity)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            await DbSet.AddAsync(entity);
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public async Task<IEnumerable<TEntity>> InsertAsync(IEnumerable<TEntity> entity)
+        public async Task UpdateAsync(T entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            await DbSet.AddRangeAsync(entity);
-            return entity;
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task DeleteAsync(T entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            DbSet.Update(entity);
-            await Task.CompletedTask;
-            return entity;
-        }
-
-        public async Task<IEnumerable<TEntity>> UpdateAsync(IEnumerable<TEntity> entity)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-            DbSet.UpdateRange(entity);
-            await Task.CompletedTask;
-            return entity;
-        }
-
-        public async Task<TEntity> DeleteAsync(object id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            var data = await DbSet.FindAsync(id);
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-            DbSet.Remove(data);
-            await Task.CompletedTask;
-            return data;
-        }
-
-        public void Dispose()
-        {
-            _dbFactory?.Dispose();
-            GC.SuppressFinalize(this);
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

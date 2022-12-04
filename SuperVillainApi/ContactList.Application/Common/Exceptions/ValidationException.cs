@@ -1,11 +1,7 @@
 ﻿using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
-namespace ContactList.Application.Common.Exceptions
+namespace Ordering.Application.Common.Exceptions
 {
     public class ValidationException : Exception
     {
@@ -23,6 +19,13 @@ namespace ContactList.Application.Common.Exceptions
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
         }
 
-        public IDictionary<string, string[]>? Errors { get; }
+        public ValidationException(IEnumerable<IdentityError> errors) : this()
+        {
+            Errors = errors
+                .GroupBy(e => e.Code, e => e.Description)
+                .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
+        }
+
+        public IDictionary<string, string[]> Errors { get; }
     }
 }

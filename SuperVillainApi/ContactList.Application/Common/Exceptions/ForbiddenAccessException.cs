@@ -1,8 +1,7 @@
-﻿
-namespace ContactList.Application.Common.Exceptions
+﻿namespace ContactList.Application.Common.Exceptions
 {
-    public class ForbiddenAccessException: Exception
+    public class ForbiddenAccessException : Exception
     {
-        public ForbiddenAccessException() : base("You are not authorized") { }
+        public ForbiddenAccessException() : base() { }
     }
 }

@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using MediatR;
-using ContactList.Application.Queries.Contacts;
-using ContactList.Application.Shared.Commands.Contacts;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using ContactList.Core.Entities;
+using ContactList.Application.Queries.VillainQuery;
+using ContactList.Application.Commands.Villain.Create;
+using ContactList.Application.Commands.Villain.Update;
+using ContactList.Application.Commands.Villain.Delete;
 
 
 
@@ -13,6 +19,7 @@ namespace ContactList.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors()]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SuperVillainController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -28,47 +35,62 @@ namespace ContactList.Api.Controllers
         //    _context = context;
         //}
         // GET: api/<ContactsController>]
-        [HttpGet]
-        public async Task<IActionResult> GetAsync([FromQuery] GetAllContactQuery query)
+        [HttpGet("GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<List<SuperVillain>> Get()
         {
-            return Ok(await _mediator.Send(query));
+            return await _mediator.Send(new GetAllSuperVillainQuery());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetContact(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<SuperVillain> Get(int id)
         {
-            return Ok(await _mediator.Send(new GetContactByIdQuery(id)));
+            return await _mediator.Send(new GetSuperVillainByIdQuery(id));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateContact([FromBody] CreateContactCommand command)
+       
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateSuperVillain([FromBody] CreateSuperVillainCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContact(int id, [FromBody] UpdateContactCommand command)
+        [HttpPut("Edit/{id}")]
+        public async Task<ActionResult> Edit(int id, [FromBody] EditSuperVillainCommand command)
         {
-
-            if (command.Id == id)
+            try
             {
-                var response = await _mediator.Send(command);
-                return Ok(response);
+                if (command.Id == id)
+                {
+                    var result = await _mediator.Send(command);
+                    return Ok(result);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
+            catch (Exception exp)
             {
-                return BadRequest();
+                return BadRequest(exp.Message);
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContact(int id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteSuperVillain(int id)
         {
 
-            string response = string.Empty;
-            response = await _mediator.Send(new DeleteContactCommand(id));
-            return Ok(response);
+            try
+            {
+                string result = string.Empty;
+                result = await _mediator.Send(new DeleteSuperVillainCommand(id));
+                return Ok(result);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(exp.Message);
+            }
         }
 
         // GET api/<ContactsController>/5

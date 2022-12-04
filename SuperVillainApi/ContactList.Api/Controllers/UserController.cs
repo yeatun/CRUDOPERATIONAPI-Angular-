@@ -1,74 +1,110 @@
-﻿using ContactList.Api.helper;
-using ContactList.Core.Entities;
-using ContactList.Infrastructure.Persistance;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using Microsoft.EntityFrameworkCore;
+using ContactList.Application.Commands.User.Create;
+using ContactList.Application.Commands.User.Delete;
+using ContactList.Application.Commands.User.Update;
+using ContactList.Application.DTOs;
+using ContactList.Application.Queries.User;
 
-namespace ContactList.Api.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace ContactList.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(Roles = "Admin, Management")]
     public class UserController : ControllerBase
     {
-        private readonly ApplicationDbContext _authcontext;
+        private readonly IMediator _mediator;
 
-        public UserController(ApplicationDbContext context)
+        public UserController(IMediator mediator)
         {
-            _authcontext = context;
+            _mediator = mediator;
         }
 
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody] User userObj)
+        [HttpPost("Create")]
+        [ProducesDefaultResponseType(typeof(int))]
+        public async Task<ActionResult> CreateUser(CreateUserCommand command)
         {
-            if(userObj == null)
-                return BadRequest();
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet("GetAll")]
+        [ProducesDefaultResponseType(typeof(List<UserResponseDTO>))]
+        public async Task<IActionResult> GetAllUserAsync()
+        {
+            return Ok(await _mediator.Send(new GetUserQuery()));
+        }
+
+        [HttpDelete("Delete/{userId}")]
+        [ProducesDefaultResponseType(typeof(int))]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var result = await _mediator.Send(new DeleteUserCommand() { Id = userId});
+            return Ok(result);
+        }
+
+        [HttpGet("GetUserDetails/{userId}")]
+        [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
+        public async Task<IActionResult> GetUserDetails(string userId)
+        {
+            var result = await _mediator.Send(new GetUserDetailsQuery() { UserId = userId });
+            return Ok(result);
+        }
+
+        [HttpGet("GetUserDetailsByUserName/{userName}")]
+        [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
+        public async Task<IActionResult> GetUserDetailsByUserName(string userName)
+        {
+            var result = await _mediator.Send(new GetUserDetailsByUserNameQuery() { UserName = userName });
+            return Ok(result);
+        }
+
+        [HttpPost("AssignRoles")]
+        [ProducesDefaultResponseType(typeof(int))]
+
+        public async Task<ActionResult> AssignRoles(AssignUsersRoleCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("EditUserRoles")]
+        [ProducesDefaultResponseType(typeof(int))]
+
+        public async Task<ActionResult> EditUserRoles(UpdateUserRolesCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllUserDetails")]
+        [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
+        public async Task<IActionResult> GetAllUserDetails()
+        {
+            var result = await _mediator.Send(new GetAllUsersDetailsQuery());
+            return Ok(result);
+        }
 
 
-            var user = await _authcontext.Users
-                .FirstOrDefaultAsync(x => x.Username == userObj.Username);
-            if (user == null)
-                return NotFound(new {Message = "User Not Found"});
-
-            var hashpass = PasswordHasher.HashPassword(userObj.Password);
-
-            if(PasswordHasher.VerifyPassword(userObj.Password, hashpass))
+        [HttpPut("EditUserProfile/{id}")]
+        [ProducesDefaultResponseType(typeof(int))]
+        public async Task<ActionResult> EditUserProfile(string id, [FromBody]EditUserProfileCommand command)
+        {
+            if (id == command.Id)
             {
-                return Ok(new
-                {
-                    Message = "Login Successful"
-                });
+                var result = await _mediator.Send(command);
+                return Ok(result);
             }
-            return NotFound(new { Message = "Wrong Password" });
-
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] User userObj)
-        {
-            if (userObj == null)
+            else
+            {
                 return BadRequest();
-
-            userObj.Password = PasswordHasher.HashPassword(userObj.Password);
-            userObj.Token = "";
-            await _authcontext.Users.AddAsync(userObj);
-            await _authcontext.SaveChangesAsync();
-            return Ok(new
-            {
-                Message = "Registration Successful"
-            });
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAsync()
-        {
-            if (_authcontext.Users == null)
-            {
-                return NotFound();
             }
-            var users = await _authcontext.Users.ToListAsync();
-            return Ok(users);
         }
+
     }
 }
