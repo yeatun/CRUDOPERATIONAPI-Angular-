@@ -15,5 +15,6 @@ namespace ContactList.Core.Entities
         public string? Franchise { get; set; }
         public string? Powers { get; set; }
         public string? ImageURL { get; set; }
+        public int Id { get; set; }
     }
 }
