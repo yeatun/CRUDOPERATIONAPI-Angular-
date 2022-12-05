@@ -1,5 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using ContactList.Infrastructure.Configs;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,16 +13,18 @@ namespace ContactList.Infrastructure.Data
 {
     public class DbConnector
     {
+        private readonly ConfigurationSettings _settings;
         private readonly IConfiguration _configuration;
 
-        protected DbConnector(IConfiguration configuration)
+        protected DbConnector(IConfiguration configuration,IOptions<ConfigurationSettings> settings)
         {
+            _settings = settings.Value;
             _configuration = configuration;
         }
 
         public IDbConnection CreateConnection()
         {
-            string _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var _connectionString = _settings.ConnectionStrings.ConfigurationDbConnection;
             return new SqliteConnection(_connectionString);
         }
     }

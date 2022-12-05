@@ -1,8 +1,10 @@
 ﻿using ContactList.Core.Entities;
 using ContactList.Core.Repositories.Command.Query;
+using ContactList.Infrastructure.Configs;
 using ContactList.Infrastructure.Repositories.Query.Base;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,8 +16,7 @@ namespace ContactList.Infrastructure.Repositories.Query
 {
     public class SuperVillainQueryRepository : QueryRepository<SuperVillain>, ISuperVillainQueryRepository
     {
-        public SuperVillainQueryRepository(IConfiguration configuration)
-           : base(configuration)
+        public SuperVillainQueryRepository(IConfiguration configuration, IOptions<ConfigurationSettings> settings) : base(configuration, settings)
         {
 
         }
@@ -35,7 +36,7 @@ namespace ContactList.Infrastructure.Repositories.Query
                 throw new Exception(exp.Message, exp);
             }
         }
-        public async Task<SuperVillain> GetByIdAsync(long id)
+        public async Task<SuperVillain> GetByIdAsync(int id)
         {
             try
             {

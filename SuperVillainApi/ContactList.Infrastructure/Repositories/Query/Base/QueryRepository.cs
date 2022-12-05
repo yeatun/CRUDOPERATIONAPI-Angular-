@@ -1,6 +1,8 @@
 ﻿using ContactList.Core.Repositories.Command.Query;
+using ContactList.Infrastructure.Configs;
 using ContactList.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,8 @@ namespace ContactList.Infrastructure.Repositories.Query.Base
 {
     public class QueryRepository<T> : DbConnector, IQueryRepository <T> where T : class
     {
-        public QueryRepository(IConfiguration configuration)
-            : base(configuration)
+        public QueryRepository(IConfiguration configuration, IOptions<ConfigurationSettings> settings) : base(configuration, settings)
         {
-
         }
     }
 }

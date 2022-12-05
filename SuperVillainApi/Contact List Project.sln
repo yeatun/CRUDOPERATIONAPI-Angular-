@@ -6,8 +6,15 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Core", "ContactList.core\ContactList.Core.csproj", "{567F7434-F1FE-48B1-BF04-66849D723E5B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Infrastructure", "ContactList.Infrastructure\ContactList.Infrastructure.csproj", "{3F875FF0-7DBB-4C1C-A157-C40389F1CD9D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{567F7434-F1FE-48B1-BF04-66849D723E5B} = {567F7434-F1FE-48B1-BF04-66849D723E5B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Api", "ContactList.Api\ContactList.Api.csproj", "{08D534AD-D860-4F6F-BE2C-4AE3CBEA2D13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C168422-9CBF-4261-9D6A-6AE2DBAE16DC} = {0C168422-9CBF-4261-9D6A-6AE2DBAE16DC}
+		{567F7434-F1FE-48B1-BF04-66849D723E5B} = {567F7434-F1FE-48B1-BF04-66849D723E5B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactList.Application", "ContactList.Application\ContactList.Application.csproj", "{0C168422-9CBF-4261-9D6A-6AE2DBAE16DC}"
 	ProjectSection(ProjectDependencies) = postProject

@@ -13,6 +13,7 @@ using ContactList.Application.Commands.Villain.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // For authentication
 var _key = builder.Configuration["Jwt:Key"];
