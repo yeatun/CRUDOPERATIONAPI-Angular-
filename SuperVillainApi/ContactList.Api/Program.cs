@@ -10,11 +10,22 @@ using ContactList.Infrastructure.Services;
 using ContactList.Application.Commands.User.Create;
 using Microsoft.OpenApi.Models;
 using ContactList.Application.Commands.Villain.Create;
+using ContactList.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7198", "http://localhost:8000", "http://localhost:5000", "https://localhost:")
+                                .AllowAnyHeader()
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod();
+        });
+});
 // For authentication
 var _key = builder.Configuration["Jwt:Key"];
 var _issuer = builder.Configuration["Jwt:Issuer"];
@@ -46,25 +57,25 @@ builder.Services.AddAuthentication(x =>
 });
 // Dependency injection with key
 builder.Services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expirtyMinutes));
+// Add services to the container.
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddEnvironmentVariables();
 // Include Infrastructur Dependency
 /*builder.Services.AddInfrastructure(builder.Configuration);
 */
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 // Register dependencies
 builder.Services.AddMediatR(typeof(CreateSuperVillainCommandHandler).GetTypeInfo().Assembly);
 builder.Services.AddMediatR(typeof(CreateUserCommandHandler).GetTypeInfo().Assembly);
 
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:7198", "http://localhost:8000", "http://localhost:5000", "https://localhost:")
-                                .AllowAnyHeader()
-                                .AllowAnyOrigin()
-                                .AllowAnyMethod();
-        });
-});
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -103,31 +114,37 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 
 
 
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
-// Must be betwwen app.UseRouting() and app.UseEndPoints()
-// maintain middleware order
-app.UseCors("CorsPolicy");
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+});
 
-// Added for authentication
-// Maintain middleware order
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
 
+
+app.Run();
 
 

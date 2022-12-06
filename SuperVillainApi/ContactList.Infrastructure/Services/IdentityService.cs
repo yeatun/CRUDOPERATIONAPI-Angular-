@@ -216,8 +216,6 @@ namespace Ordering.Infrastructure.Services
         {
             var result = await _signInManager.PasswordSignInAsync(userName, password, true, false);
             return result.Succeeded;
-
-
         }
 
         public async Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles)
