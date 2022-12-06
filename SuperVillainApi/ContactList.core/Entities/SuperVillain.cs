@@ -10,11 +10,11 @@ namespace ContactList.Core.Entities
     public class SuperVillain
     {
         [Key]
-       /* public int Id { get; set; }*/
+        public Int64 Id { get; set; }
         public string? VillainName { get; set; }
         public string? Franchise { get; set; }
         public string? Powers { get; set; }
         public string? ImageURL { get; set; }
-        public int Id { get; set; }
+        /*public int Id { get; set; }*/
     }
 }

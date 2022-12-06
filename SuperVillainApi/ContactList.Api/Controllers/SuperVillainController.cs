@@ -44,7 +44,7 @@ namespace ContactList.Api.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<SuperVillain> Get(int id)
+        public async Task<SuperVillain> Get(Int64 id)
         {
             return await _mediator.Send(new GetSuperVillainByIdQuery(id));
         }

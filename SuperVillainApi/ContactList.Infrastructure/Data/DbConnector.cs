@@ -1,4 +1,5 @@
 ﻿using ContactList.Infrastructure.Configs;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -25,7 +26,7 @@ namespace ContactList.Infrastructure.Data
         public IDbConnection CreateConnection()
         {
             var _connectionString = _settings.ConnectionStrings.ConfigurationDbConnection;
-            return new SqliteConnection(_connectionString);
+            return new SqlConnection(_connectionString);
         }
     }
 }

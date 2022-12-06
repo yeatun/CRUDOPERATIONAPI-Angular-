@@ -10,6 +10,6 @@ namespace ContactList.Core.Repositories.Command.Query
     public interface ISuperVillainQueryRepository : IQueryRepository<SuperVillain>
     {
         Task<IReadOnlyList<SuperVillain>> GetAllAsync();
-        Task<SuperVillain> GetByIdAsync(int id);
+        Task<SuperVillain> GetByIdAsync(Int64 id);
     }
 }

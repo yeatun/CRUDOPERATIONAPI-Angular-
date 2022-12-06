@@ -10,9 +10,9 @@ namespace ContactList.Application.Queries.VillainQuery
 {
     public class GetSuperVillainByIdQuery : IRequest<SuperVillain>
     {
-        public int Id { get; private set; }
+        public Int64 Id { get; private set; }
 
-        public GetSuperVillainByIdQuery(int Id)
+        public GetSuperVillainByIdQuery(Int64 Id)
         {
             this.Id = Id;
         }

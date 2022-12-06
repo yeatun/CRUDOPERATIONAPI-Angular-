@@ -36,11 +36,11 @@ namespace ContactList.Infrastructure.Repositories.Query
                 throw new Exception(exp.Message, exp);
             }
         }
-        public async Task<SuperVillain> GetByIdAsync(int id)
+        public async Task<SuperVillain> GetByIdAsync(long id)
         {
             try
             {
-                var query = "SELECT * FROM VILLAINS WHERE Id = @Id";
+                var query = "SELECT * FROM SuperVillain WHERE Id = @Id";
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Int64);
 

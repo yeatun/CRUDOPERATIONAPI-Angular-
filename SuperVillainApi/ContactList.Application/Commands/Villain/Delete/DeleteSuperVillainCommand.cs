@@ -11,8 +11,8 @@ namespace ContactList.Application.Commands.Villain.Delete
 {
     public class DeleteSuperVillainCommand : IRequest<String>
     {
-        public int Id { get; private set; }
-        public DeleteSuperVillainCommand(int Id)
+        public Int64 Id { get; private set; }
+        public DeleteSuperVillainCommand(Int64 Id)
         {
             this.Id = Id;
         }
