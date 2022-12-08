@@ -24,7 +24,7 @@ namespace ContactList.Infrastructure.Repositories.Query
         {
             try
             {
-                var query = "SELECT * FROM SUPERVILLAIN";
+                var query = "SELECT * FROM SuperVillain";
 
                 using (var connection = CreateConnection())
                 {

@@ -9,7 +9,7 @@ namespace Ordering.Core.Entities.Base
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public DateTime ModifiedDate { get; private set; }

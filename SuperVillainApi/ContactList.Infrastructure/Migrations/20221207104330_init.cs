@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ContactList.Infrastructure.Migrations
 {
-    public partial class testinit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,15 +53,16 @@ namespace ContactList.Infrastructure.Migrations
                 name: "SuperVillain",
                 columns: table => new
                 {
-                    VillainName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VillainName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Franchise = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Powers = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SuperVillain", x => x.VillainName);
+                    table.PrimaryKey("PK_SuperVillain", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

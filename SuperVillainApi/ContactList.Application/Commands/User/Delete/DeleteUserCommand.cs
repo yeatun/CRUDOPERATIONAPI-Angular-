@@ -5,7 +5,7 @@ namespace ContactList.Application.Commands.User.Delete
 {
     public class DeleteUserCommand : IRequest<int>
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, int>

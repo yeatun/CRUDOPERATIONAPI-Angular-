@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactList.Infrastructure.Migrations
 {
     [DbContext(typeof(SuperVillainDbContext))]
-    [Migration("20221205091042_test-init")]
-    partial class testinit
+    [Migration("20221207104350_init46898")]
+    partial class init46898
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,14 +26,14 @@ namespace ContactList.Infrastructure.Migrations
 
             modelBuilder.Entity("ContactList.Core.Entities.SuperVillain", b =>
                 {
-                    b.Property<string>("VillainName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("Id"), 1L, 1);
 
                     b.Property<string>("Franchise")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
@@ -41,7 +41,10 @@ namespace ContactList.Infrastructure.Migrations
                     b.Property<string>("Powers")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("VillainName");
+                    b.Property<string>("VillainName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("SuperVillain");
                 });

@@ -5,10 +5,10 @@ namespace ContactList.Application.Commands.User.Update
 {
     public class EditUserProfileCommand : IRequest<int>
     {
-        public string Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public List<string> Roles { get; set; }
+        public string? Id { get; set; }
+        public string? FullName { get; set; }
+        public string ?Email { get; set; }
+        public List<string>? Roles { get; set; }
     }
 
     public class EditUserProfileCommandHandler : IRequestHandler<EditUserProfileCommand, int>
