@@ -19,13 +19,12 @@ spec:
     spec:
       terminationGracePeriodSeconds: 31
       containers:
-      - image: docker.io/01521433811/backend-project-api:42
+      - image: docker.io/01521433811/backend-project-api:TAG_NUMBER
         name: backendcqrs
         ports:
         - containerPort: 80
         resources: {}
-      # nodeSelector:
-      #   env: dev
+
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
