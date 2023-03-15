@@ -24,8 +24,7 @@ spec:
         ports:
         - containerPort: 80
         resources: {}      
-      nodeSelector:
-        env: dev
+
 status: {}
 ---
 apiVersion: v1
