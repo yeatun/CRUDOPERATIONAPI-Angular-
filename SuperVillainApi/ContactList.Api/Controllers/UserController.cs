@@ -34,13 +34,16 @@ namespace ContactList.API.Controllers
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpGet("GetAll")]
         [ProducesDefaultResponseType(typeof(List<UserResponseDTO>))]
         public async Task<IActionResult> GetAllUserAsync()
         {
             return Ok(await _mediator.Send(new GetUserQuery()));
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpDelete("Delete/{userId}")]
         [ProducesDefaultResponseType(typeof(int))]
         public async Task<IActionResult> DeleteUser(string userId)
@@ -48,6 +51,8 @@ namespace ContactList.API.Controllers
             var result = await _mediator.Send(new DeleteUserCommand() { Id = userId});
             return Ok(result);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
 
         [HttpGet("GetUserDetails/{userId}")]
         [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
@@ -56,7 +61,8 @@ namespace ContactList.API.Controllers
             var result = await _mediator.Send(new GetUserDetailsQuery() { UserId = userId });
             return Ok(result);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpGet("GetUserDetailsByUserName/{userName}")]
         [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
         public async Task<IActionResult> GetUserDetailsByUserName(string userName)
@@ -64,7 +70,8 @@ namespace ContactList.API.Controllers
             var result = await _mediator.Send(new GetUserDetailsByUserNameQuery() { UserName = userName });
             return Ok(result);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpPost("AssignRoles")]
         [ProducesDefaultResponseType(typeof(int))]
 
@@ -73,7 +80,8 @@ namespace ContactList.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpPut("EditUserRoles")]
         [ProducesDefaultResponseType(typeof(int))]
 
@@ -82,7 +90,8 @@ namespace ContactList.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpGet("GetAllUserDetails")]
         [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
         public async Task<IActionResult> GetAllUserDetails()
@@ -91,7 +100,8 @@ namespace ContactList.API.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin, Management")]
         [HttpPut("EditUserProfile/{id}")]
         [ProducesDefaultResponseType(typeof(int))]
         public async Task<ActionResult> EditUserProfile(string id, [FromBody]EditUserProfileCommand command)

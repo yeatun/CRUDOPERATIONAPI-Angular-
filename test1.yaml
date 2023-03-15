@@ -31,7 +31,7 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimeStamp: null
+  creationTimestamp: null
   labels:
     app: test1
   name: test1
