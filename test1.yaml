@@ -19,12 +19,26 @@ spec:
     spec:
       terminationGracePeriodSeconds: 31
       containers:
-      - image: docker.io/01521433811/backend-project-api:TAG_NUMBER
+      - image: docker.io/01521433811/backend-project-api:42
         name: backendcqrs
         ports:
         - containerPort: 80
-        resources: {}      
-
+        resources: {}
+      # nodeSelector:
+      #   env: dev
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - ansible-node1
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
 status: {}
 ---
 apiVersion: v1
