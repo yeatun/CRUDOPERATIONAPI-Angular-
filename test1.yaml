@@ -51,7 +51,7 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - amsl-node1
+                - ansible-node1
       tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
