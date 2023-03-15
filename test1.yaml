@@ -5,6 +5,7 @@ metadata:
   labels:
     app: test1
   name: test1
+  namespace: devops-test
 spec:
   replicas: 1
   selector:
@@ -18,11 +19,28 @@ spec:
         app: test1
     spec:
       terminationGracePeriodSeconds: 31
+      volumes:
+      - name: tls-vol
+        secret:
+          secretName: secret-file
       containers:
-      - image: docker.io/01521433811/backend-project-api:TAG_NUMBER
+      - env:
+        - name: ASPNETCORE_URLS
+          value: http://+:80;https://+:443
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          value: pabel
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+          value: /etc/tls-vol/cer_key.pfx
+
+        image: docker.io/01521433811/backend-project-api:TAG_NUMBER
         name: backendcqrs
         ports:
         - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - mountPath: /etc/tls-vol
+          name: tls-vol
+
         resources: {}
 
       affinity:
@@ -33,12 +51,13 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - ansible-node1
+                - amsl-node1
       tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
         effect: "NoSchedule"
 status: {}
+
 ---
 apiVersion: v1
 kind: Service
@@ -47,6 +66,7 @@ metadata:
   labels:
     app: test1
   name: test1
+  namespace: devops-test
 spec:
   type: LoadBalancer
   selector:
@@ -54,7 +74,9 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
-    nodePort: 30507
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
 status:
   loadBalancer: {}
